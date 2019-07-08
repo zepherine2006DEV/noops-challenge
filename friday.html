@@ -5,15 +5,36 @@
   <title>Noops Challenge</title>
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
   <script>
+
+  function timedRefresh(timeoutPeriod) {
+	  setTimeout("location.reload(true);",timeoutPeriod);
+  }
+
+  window.onload = timedRefresh(15000);
+
   $( document ).ready(function() {
-    $.get( "https://api.noopschallenge.com/hexbot", function( resp ) {
-      api_colour = resp.colors[0].value; 
-      $("#fritext").css("color", api_colour);
+
+    $(document).ready(function() {
+      $("#mydiv").fadeIn();
     });
+
+    var colours = [];
+
+    for (i=0; i<10; i++) {
+       $.get( "https://api.noopschallenge.com/hexbot", function( resp ) {
+       colours.push(resp.colors[0].value); 
+       console.log(colours);
+    });
+    }
+
+    $("#fritext").css("color", colours[0]);
+    $("body").css("background-color", colours[1]);
   });
   </script>
 </head>
-<body>
-  <p1 id="fritext">It's Friday Buy Day!</p1>
-</body>
+<div id="mydiv">
+  <body>
+    <h1 id="fritext">It's Friday Buy Day!</h1>
+  </body>
+  </div>
 </html>
